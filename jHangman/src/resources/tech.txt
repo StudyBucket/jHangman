@@ -1,0 +1,10 @@
+framework
+fullstack
+microservice
+library
+model-view-controller
+mutability
+database
+cloudbased
+graphql
+innovation
