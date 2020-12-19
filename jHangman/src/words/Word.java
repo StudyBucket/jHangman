@@ -26,4 +26,20 @@ public class Word {
 		return new String(this.word);
 	}
 	
+	public boolean isSolved(List<Character> hitsSoFar) {
+		for( Character c : this.word ) {
+			if(!hitsSoFar.contains(c)) return false;
+		}
+		return true;
+	}
+	
+	public boolean contains(char c) {
+	    for (char x : this.word) {
+	        if (x == c) {
+	            return true;
+	        }
+	    }
+	    return false;
+	}
+	
 }

@@ -11,6 +11,9 @@ public class LifeManagement {
 	
 	public void loseALife() {
 		--this.currentLifePoints;
+		System.out.println(	"You lost a life point! " 
+							+ this.getCurrentLifePoints() + "/" 
+							+ this.getMaxLifePoints() );
 	}
 	
 	public boolean isStillAlive() {

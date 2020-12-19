@@ -9,12 +9,17 @@ import words.Word;
 public class Core {
 	
 	private WordStorage wordStorage;
+	private Word currentWord;
 	private LifeManagement lifeManagement;
-	private String currentWord;
-	private boolean playing = false;
-	private boolean displayMissedShots = false;
+	
 	private List<Character> missedShots = new ArrayList<Character>();
 	private List<Character> hits = new ArrayList<Character>();
+	
+	private int draws;
+	
+	private boolean playing = false;
+	private boolean displayMissedShots = false;
+	private boolean falseInputMeansLostLife = false;
 	
 	public Core(int difficulty, String file){ 
 		this.wordStorage = new WordStorage();
@@ -22,13 +27,14 @@ public class Core {
 		int lifePoints;
 		switch(difficulty) {
 		  case 2:
-			  	lifePoints = 3;
+			  	lifePoints = 5;
+			  	this.falseInputMeansLostLife = true;
 			  	break;
 		  case 1:
-			  	lifePoints = 5;
+			  	lifePoints = 7;
 			  	break;
 		  default:
-			  	lifePoints = 5;
+			  	lifePoints = 9;
 			  	this.displayMissedShots = true;
 			  	break;
 		}
@@ -36,21 +42,11 @@ public class Core {
 	}
 	
 	private void setCurrentWord(String word) {
-		this.currentWord = word;
-		System.out.println(this.getCurrentWordCovered());
-	}
-	
-	private String getCurrentWordUncoveredLowerCase() {
-		return this.currentWord.toLowerCase();
-	}
-	
-	private String getCurrentWordCovered() {
-		Word cW = new Word(this.currentWord);
-		// String coveredWord = this.currentWord.replaceAll("[a-zA-Z]", "_");
-		return cW.toCoveredString(this.hits);
+		this.currentWord = new Word(word);
 	}
 	
 	public void startRound() {
+		this.draws = 0;
 		this.setCurrentWord( this.wordStorage.getRandomWord() );
 		this.playing = true;
 	}
@@ -65,39 +61,61 @@ public class Core {
 	
 	private void handleHit(Character c) {
 		this.hits.add(c);
-		System.out.println("HIT!");
+		System.out.println("[Game] That's a hit!");
 	}
 	
 	private void handleMissed(Character c) {
-		this.missedShots.add(c);
+		if( c != null) this.missedShots.add(c);
 		this.lifeManagement.loseALife();
-		System.out.println(	"MISSED! YOU LOST A LIFE: " 
-							+ this.lifeManagement.getCurrentLifePoints() + "/" 
-							+ this.lifeManagement.getMaxLifePoints()	);
-		if( this.lifeManagement.isStillAlive() != true ) this.loseGame();
 	}
 	
 	private void loseGame() {
 		this.endRound();
-		System.out.println("YOU LOST!");
+		System.out.println("[Game] The word was '" + this.currentWord.toUncoveredString() + "'. You LOST after " + this.draws + " draws.");
+	}
+	
+	private void winGame() {
+		this.endRound();
+		System.out.println("[Game] The word was '" + this.currentWord.toUncoveredString() + "'. You WON after " + this.draws + " draws.");
 	}
 	
 	public void shoot(String input) {
-		System.out.print("\n\n");;
+		
 		if( !input.chars().allMatch(Character::isLetter) ) {
-			System.out.println("NOT A VALID INPUT!");
+			System.out.println("[Game] Not a valid character.");
+			if(this.falseInputMeansLostLife == true) this.handleMissed(null);
 		} else {
 			Character c = input.toLowerCase().toCharArray()[0];
-			if(this.getCurrentWordUncoveredLowerCase().contains(c.toString())) {
-				if(this.hits.contains(c)) {
-					System.out.println("DOUBLE CHECKED!");
+			if(this.hits.contains(c)|| this.missedShots.contains(c)) {
+				System.out.println("[Game] You tried that one already!");
+				this.handleMissed(null);
+			} else {
+				if(this.currentWord.contains(c)) {
+					this.handleHit(c);
+				} else {
 					this.handleMissed(c);
 				}
-				this.handleHit(c);
-			} else {
-				this.handleMissed(c);
 			}
 		}
-		System.out.println(this.getCurrentWordCovered() + " | " + this.lifeManagement.toString());
+	
+		++this.draws;
+		this.printGameState();
+		if( this.lifeManagement.isStillAlive() != true ) this.loseGame();
+		if( this.currentWord.isSolved(this.hits) ) this.winGame();
+	}
+	
+	private void printGameState() {
+		System.out.println("[Game] " + this.currentWord.toCoveredString(this.hits));
+		
+		String message = 	this.lifeManagement.toString() 
+							+ " | " + this.draws + " draws";
+		if(this.isPlaying()) message += " so far.";
+		else message += " in total.";
+		System.out.println(message);
+		
+		if(this.displayMissedShots) {
+			message = "Missed: " + this.missedShots.toString();
+			System.out.println(message);
+		}
 	}
 }
