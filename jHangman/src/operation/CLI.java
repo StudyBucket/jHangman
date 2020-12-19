@@ -11,6 +11,7 @@ public class CLI {
 	boolean running;
 	
 	public void start() {
+		System.out.println("CLI running!");
 		this.running = true;
 		
 		while(this.running) {

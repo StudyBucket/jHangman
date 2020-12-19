@@ -5,6 +5,7 @@ public class JHangman {
 	public static void main(String[] args) {
 		System.out.println("*** jHangman ***");
 		System.out.println("Starting ...");
+		System.out.println("No UI available. Starting CLI ...");
 
 		CLI cli = new CLI();
 		cli.start();
