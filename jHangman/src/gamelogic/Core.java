@@ -8,9 +8,12 @@ import words.Word;
 
 public class Core {
 	
+	private ILifeManagement lifeManagement;
+	private ILevelOfDifficultyManagement levelOfDifficultyManagement;
+	
 	private WordStorage wordStorage;
 	private Word currentWord;
-	private LifeManagement lifeManagement;
+	
 	
 	private List<Character> missedShots = new ArrayList<Character>();
 	private List<Character> hits = new ArrayList<Character>();
@@ -18,27 +21,17 @@ public class Core {
 	private int draws;
 	
 	private boolean playing = false;
-	private boolean displayMissedShots = false;
-	private boolean falseInputMeansLostLife = false;
 	
 	public Core(int difficulty, String file){ 
 		this.wordStorage = new WordStorage();
 		this.wordStorage.loadWords(file);
-		int lifePoints;
-		switch(difficulty) {
-		  case 2:
-			  	lifePoints = 5;
-			  	this.falseInputMeansLostLife = true;
-			  	break;
-		  case 1:
-			  	lifePoints = 7;
-			  	break;
-		  default:
-			  	lifePoints = 9;
-			  	this.displayMissedShots = true;
-			  	break;
+		this.levelOfDifficultyManagement = new LevelOfDifficultyManagement();
+		try {
+			this.levelOfDifficultyManagement.setLevel(difficulty);
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
-		this.lifeManagement = new LifeManagement(lifePoints);
+		this.lifeManagement = new LifeManagement( this.levelOfDifficultyManagement.getLifePointsSetting() );
 	}
 	
 	private void setCurrentWord(String word) {
@@ -83,7 +76,7 @@ public class Core {
 		
 		if( !input.chars().allMatch(Character::isLetter) ) {
 			System.out.println("[Game] Not a valid character.");
-			if(this.falseInputMeansLostLife == true) this.handleMissed(null);
+			if( this.levelOfDifficultyManagement.getFalseInputMeansLostLifeSetting() ) this.handleMissed(null);
 		} else {
 			Character c = input.toLowerCase().toCharArray()[0];
 			if(this.hits.contains(c)|| this.missedShots.contains(c)) {
@@ -113,7 +106,7 @@ public class Core {
 		else message += " in total.";
 		System.out.println(message);
 		
-		if(this.displayMissedShots) {
+		if( this.levelOfDifficultyManagement.getDisplayMissedShotsSetting() ) {
 			message = "Missed: " + this.missedShots.toString();
 			System.out.println(message);
 		}
