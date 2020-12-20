@@ -36,24 +36,33 @@
 
         <Package name="gamelogic">
             <Stats>
-                <TotalClasses>1</TotalClasses>
-                <ConcreteClasses>0</ConcreteClasses>
-                <AbstractClasses>1</AbstractClasses>
+                <TotalClasses>4</TotalClasses>
+                <ConcreteClasses>1</ConcreteClasses>
+                <AbstractClasses>3</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>1</Ce>
-                <A>1</A>
+                <A>0.75</A>
                 <I>0.5</I>
-                <D>0.5</D>
+                <D>0.25</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
+                <Class sourceFile="ILevelOfDifficultyManagement.java">
+                    gamelogic.ILevelOfDifficultyManagement
+                </Class>
                 <Class sourceFile="ILifeManagement.java">
                     gamelogic.ILifeManagement
+                </Class>
+                <Class sourceFile="package-info.java">
+                    gamelogic.package-info
                 </Class>
             </AbstractClasses>
 
             <ConcreteClasses>
+                <Class sourceFile="LevelOfDifficultyManagement.java">
+                    gamelogic.LevelOfDifficultyManagement
+                </Class>
             </ConcreteClasses>
 
             <DependsUpon>
@@ -79,18 +88,21 @@
 
         <Package name="operation">
             <Stats>
-                <TotalClasses>1</TotalClasses>
+                <TotalClasses>2</TotalClasses>
                 <ConcreteClasses>1</ConcreteClasses>
-                <AbstractClasses>0</AbstractClasses>
+                <AbstractClasses>1</AbstractClasses>
                 <Ca>1</Ca>
                 <Ce>4</Ce>
-                <A>0</A>
+                <A>0.5</A>
                 <I>0.8</I>
-                <D>0.2</D>
+                <D>0.3</D>
                 <V>1</V>
             </Stats>
 
             <AbstractClasses>
+                <Class sourceFile="package-info.java">
+                    operation.package-info
+                </Class>
             </AbstractClasses>
 
             <ConcreteClasses>
@@ -108,6 +120,36 @@
 
             <UsedBy>
                 <Package>Default</Package>
+            </UsedBy>
+        </Package>
+
+        <Package name="words">
+            <Stats>
+                <TotalClasses>1</TotalClasses>
+                <ConcreteClasses>0</ConcreteClasses>
+                <AbstractClasses>1</AbstractClasses>
+                <Ca>0</Ca>
+                <Ce>1</Ce>
+                <A>1</A>
+                <I>1</I>
+                <D>1</D>
+                <V>1</V>
+            </Stats>
+
+            <AbstractClasses>
+                <Class sourceFile="package-info.java">
+                    words.package-info
+                </Class>
+            </AbstractClasses>
+
+            <ConcreteClasses>
+            </ConcreteClasses>
+
+            <DependsUpon>
+                <Package>java.lang</Package>
+            </DependsUpon>
+
+            <UsedBy>
             </UsedBy>
         </Package>
     </Packages>

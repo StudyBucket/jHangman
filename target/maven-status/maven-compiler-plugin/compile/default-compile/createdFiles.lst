@@ -1,8 +1,8 @@
 operation/CLI.class
+gamelogic/Core.class
+words/WordStorage.class
+gamelogic/ILifeManagement.class
 words/WordIO.class
 words/Word.class
 gamelogic/LifeManagement.class
-gamelogic/Core.class
 JHangman.class
-words/WordStorage.class
-gamelogic/ILifeManagement.class
