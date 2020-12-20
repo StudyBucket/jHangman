@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class WordIO {
+public class WordIO implements IWordIO {
 	
 	private static final String BASE_PATH = "./src/resources/";
 	private static final String TYPE = ".wrds";

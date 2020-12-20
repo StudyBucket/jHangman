@@ -4,22 +4,22 @@ import java.util.ArrayList;
 import java.util.List;
 
 import words.WordStorage;
+import words.IWordStorage;
 import words.Word;
+import words.IWord;
 
-public class Core {
+public class Core implements ICore {
 	
 	private ILifeManagement lifeManagement;
 	private ILevelOfDifficultyManagement levelOfDifficultyManagement;
 	
-	private WordStorage wordStorage;
-	private Word currentWord;
-	
+	private IWordStorage wordStorage;
+	private IWord currentWord;
 	
 	private List<Character> missedShots = new ArrayList<Character>();
 	private List<Character> hits = new ArrayList<Character>();
 	
 	private int draws;
-	
 	private boolean playing = false;
 	
 	public Core(int difficulty, String file){ 

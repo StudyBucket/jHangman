@@ -1,11 +1,12 @@
 package operation;
 
 import java.util.Scanner;
+import gamelogic.ICore;
 import gamelogic.Core;
 
 public class CLI {
 	
-	private Core game;
+	private ICore game;
 	private Scanner input = new Scanner(System.in);
 	
 	boolean running;
@@ -21,7 +22,6 @@ public class CLI {
 		    if( this.isExitCommand(command) ) this.exit();
 		}
 	}
-	
 	
 	private void startGame() {
 		Integer difficulty = this.selectDifficulty();

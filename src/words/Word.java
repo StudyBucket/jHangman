@@ -2,7 +2,7 @@ package words;
 
 import java.util.List;
 
-public class Word {
+public class Word implements IWord {
 	
 	char[] word;
 
