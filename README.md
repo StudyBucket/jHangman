@@ -1,1 +1,3 @@
 # jHangman
+
+Sample project.
