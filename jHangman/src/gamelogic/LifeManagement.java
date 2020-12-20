@@ -1,12 +1,12 @@
 package gamelogic;
 
-public class LifeManagement {
-	private final int maxLifePoints;
+public class LifeManagement implements ILifeManagement {
+	private int maxLifePoints;
 	private int currentLifePoints;
 	
-	LifeManagement(int maxLifePoints){
+	public LifeManagement(int maxLifePoints) {
 		this.maxLifePoints = maxLifePoints;
-		this.currentLifePoints = maxLifePoints;
+		this.currentLifePoints = maxLifePoints;	
 	}
 	
 	public void loseALife() {
